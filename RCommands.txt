@@ -1,0 +1,28 @@
+> View(expNorm) 
+> include_list <- c("Ppia", "Actb", "Gapdh", "Nanog")  //To pull the genes/transcription factors from original matrix. 
+
+> HM <- expNorm[include_list, ]    //Set the new matrix HM to just the genes and transcription factor we want.
+
+> HM
+        mESC_1    mESC_2    mESC_3    mESC_4   mESC_5    mESC_6
+Ppia  0.000000  4.954047  6.922959  7.578584 3.246780  6.678016
+Actb  9.014771 10.635104 10.614590 11.073560 9.810639 11.612224
+Gapdh 6.819917 10.134313 10.339473 10.578505 7.177899 10.799798
+Nanog 5.955963  8.076259  8.828242  9.278509 6.193483  9.879025      //View and check that it works. 
+
+> heatmap.2(HM, dendrogram = c("row")) //To produce a heatmap of the above data. See PDF “HM”
+
+> DexpNorm <- data.frame(expNorm) //Set the matrix to a data frame. 
+
+> qplot(DexpNorm$mESC_3, DexpNorm$mESC_6, color="orange", alpha="1/2", xlab="mESC_3", ylab="mESC_6", main="qplot of mESC_3 and mESC_6")+guides(colour=FALSE)+guides(alpha=FALSE)  //To plot mESC_3 and mESC_6 with the color orange and no key. 
+
+> attach(DexpNorm) //Set environment for PCC. 
+
+> cor(mESC_3,mESC_6) //Pearson CC command. 
+[1] 0.7547065                    //PCC, interesting!
+
+> d <- dist(expNorm) //To get the distance between objects in order to do a HC. 
+
+> hc <- hclust(d) //Set hc to do the HC. 
+
+> plot(hc) //Plot the hierarchical cluster. 
